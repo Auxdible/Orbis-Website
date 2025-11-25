@@ -19,9 +19,27 @@ export default function Home() {
 
         <h1 className={styles.title}>ORBIS</h1>
 
-        <p className={styles.subtitle}>Something amazing is coming...</p>
+        <p className={styles.subtitle}>The community-driven hub for Hytale</p>
 
-        <p className={styles.message}>Stay tuned for updates!</p>
+        <div className={styles.features}>
+          <div className={styles.feature}>
+            <span className={styles.featureIcon}>🔧</span>
+            <h3 className={styles.featureTitle}>Marketplace</h3>
+            <p className={styles.featureText}>Plugins, mods & assets</p>
+          </div>
+          <div className={styles.feature}>
+            <span className={styles.featureIcon}>🖥️</span>
+            <h3 className={styles.featureTitle}>Server Discovery</h3>
+            <p className={styles.featureText}>Find & vote for servers</p>
+          </div>
+          <div className={styles.feature}>
+            <span className={styles.featureIcon}>👥</span>
+            <h3 className={styles.featureTitle}>Community Hub</h3>
+            <p className={styles.featureText}>Built by players, for players</p>
+          </div>
+        </div>
+
+        <p className={styles.message}>Launching with Hytale 🚀</p>
 
         <div className={styles.socials}>
           <a
