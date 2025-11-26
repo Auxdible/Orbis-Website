@@ -5,7 +5,7 @@ import {AppController} from './app.controller';
 import {PrismaModule} from "./prisma/prisma.module";
 
 import {AuthModule} from '@thallesp/nestjs-better-auth';
-import {UsersModule} from "./modules/users/users.module";
+import {UserModule} from "./modules/user/user.module";
 import {AuthModule as OrbisAuthModule} from "./modules/auth/auth.module";
 import { ConfigModule } from '@nestjs/config';
 import {auth} from '@repo/auth';
@@ -16,7 +16,7 @@ import {auth} from '@repo/auth';
             isGlobal: true,
             envFilePath: '.env',
         }),
-        PrismaModule, AuthModule.forRoot({auth}), UsersModule, OrbisAuthModule],
+        PrismaModule, AuthModule.forRoot({auth}), UserModule, OrbisAuthModule],
     controllers: [AppController],
     providers: [AppService],
 })

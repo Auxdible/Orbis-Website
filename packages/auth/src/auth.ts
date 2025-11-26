@@ -11,6 +11,7 @@ export const getAuth = () => {
         authInstance = betterAuth({
             baseURL: process.env.BETTER_AUTH_URL,
             secret: process.env.BETTER_AUTH_SECRET!,
+            basePath: '/auth',
             emailAndPassword: {
                 enabled: true,
                 requireEmailVerification: true,
