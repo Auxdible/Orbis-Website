@@ -11,6 +11,7 @@ import {ConfigModule} from '@nestjs/config';
 import {auth} from '@repo/auth';
 import {ServerModule} from "./modules/server/server.module";
 import {TeamModule} from "./modules/team/team.module";
+import {ReportModule} from "./modules/report/report.module";
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import {TeamModule} from "./modules/team/team.module";
             isGlobal: true,
             envFilePath: '.env',
         }),
-        PrismaModule, AuthModule.forRoot({auth}), UserModule, OrbisAuthModule, ServerModule, TeamModule],
+        PrismaModule, AuthModule.forRoot({auth}), UserModule, OrbisAuthModule, ServerModule, TeamModule, ReportModule],
     controllers: [AppController],
     providers: [AppService],
 })

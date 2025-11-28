@@ -41,6 +41,29 @@ enum TeamMemberRole {
   MEMBER
 }
 
+enum ReportReason {
+  SPAM
+  REUPLOADED_WORK
+  INAPPROPRIATE
+  MALICIOUS
+  NAME_SQUATTING
+  POOR_DESCRIPTION
+  INVALID_METADATA
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportResourceType {
+  USER
+  // Future: SERVER, MOD, PLUGIN, etc.
+}
+
 // ============================================
 // USER MODEL
 // ============================================
@@ -104,6 +127,10 @@ model User {
 
   // Server status changes
   statusChanges ServerStatusHistory[] @relation("StatusChanger")
+
+  // Reports
+  submittedReports Report[] @relation("ReportSubmitter")
+  handledReports   Report[] @relation("ReportHandler")
 
   @@index([email])
   @@index([username])
@@ -402,5 +429,38 @@ model ServerPlayerHistory {
   @@index([serverId, timestamp])
   @@index([timestamp])
   @@map("server_player_history")
+}
+
+// ============================================
+// REPORT SYSTEM
+// ============================================
+
+model Report {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Report details
+  resourceType ReportResourceType
+  resourceId   String // ID of the reported resource (user, server, etc.)
+  reason       ReportReason
+  description  String?            @db.Text // Additional context if reason is OTHER
+  status       ReportStatus       @default(PENDING)
+
+  // Reporter
+  reporterId String
+  reporter   User   @relation("ReportSubmitter", fields: [reporterId], references: [id], onDelete: Cascade)
+
+  // Moderation
+  handledBy String?
+  handler   User?    @relation("ReportHandler", fields: [handledBy], references: [id], onDelete: SetNull)
+  handledAt DateTime?
+  response  String?  @db.Text // Moderator's response or notes
+
+  @@index([resourceType, resourceId])
+  @@index([reporterId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("reports")
 }
 

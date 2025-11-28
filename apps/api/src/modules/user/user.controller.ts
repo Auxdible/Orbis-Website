@@ -1,5 +1,5 @@
 // users.controller.ts
-import {Body, Controller, Delete, Get, Patch, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags} from '@nestjs/swagger';
 import {UpdateProfileDto} from "./dtos/update-profile.dto";
 import {UserService} from "./user.service";
@@ -56,5 +56,43 @@ export class UserController {
     @ApiOperation({summary: 'Get current user servers'})
     async getUserServers(@Session() session: UserSession) {
         return this.serverService.getUserServers(session.user.id);
+    }
+
+    @Post(':userId/follow')
+    @ApiBearerAuth()
+    @ApiOperation({summary: 'Follow a user'})
+    async followUser(
+        @Session() session: UserSession,
+        @Param('userId') userId: string,
+    ) {
+        return this.userService.followUser(session.user.id, userId);
+    }
+
+    @Delete(':userId/follow')
+    @ApiBearerAuth()
+    @ApiOperation({summary: 'Unfollow a user'})
+    async unfollowUser(
+        @Session() session: UserSession,
+        @Param('userId') userId: string,
+    ) {
+        return this.userService.unfollowUser(session.user.id, userId);
+    }
+
+    @Get(':userId/followers')
+    @ApiOperation({summary: 'Get user followers'})
+    async getFollowers(@Param('userId') userId: string) {
+        return this.userService.getFollowers(userId);
+    }
+
+    @Get(':userId/following')
+    @ApiOperation({summary: 'Get users that this user is following'})
+    async getFollowing(@Param('userId') userId: string) {
+        return this.userService.getFollowing(userId);
+    }
+
+    @Get(':userId')
+    @ApiOperation({summary: 'Get user profile by ID'})
+    async getUserProfile(@Param('userId') userId: string) {
+        return this.userService.getUserProfile(userId);
     }
 }
