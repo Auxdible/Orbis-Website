@@ -13,9 +13,29 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({
         transform: true,
     }));
-    app.enableCors();
 
     const configService = app.get(ConfigService);
+
+    const isDev = process.env.NODE_ENV !== 'production';
+    app.enableCors({
+        origin: (origin, callback) => {
+            if (isDev) {
+                if (origin === 'http://localhost:3001') {
+                    return callback(null, true);
+                }
+            } else {
+                if (origin.endsWith('.orbis.place') || origin === 'https://orbis.place') {
+                    return callback(null, true);
+                }
+            }
+
+            callback(new Error('Not allowed by CORS'));
+        },
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    });
+
     const resendApiKey = configService.get<string>('RESEND_API_KEY');
 
     if (!resendApiKey) {
