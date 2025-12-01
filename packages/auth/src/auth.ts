@@ -14,6 +14,9 @@ export const getAuth = () => {
                     name: "username"
                 },
             },
+            trustedOrigins: process.env.NODE_ENV === 'production'
+                ? ["https://dev.orbis.place", "https://orbis.place"]
+                : ["http://localhost:3001"],
             baseURL: process.env.BETTER_AUTH_URL,
             secret: process.env.BETTER_AUTH_SECRET!,
             basePath: '/auth',
