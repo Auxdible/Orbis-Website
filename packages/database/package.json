@@ -13,16 +13,21 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name auto",
     "db:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
     "build": "prisma generate && tsup ./index.ts --format cjs,esm",
     "dev": "tsup ./index.ts --format cjs,esm --watch"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.30",
     "@types/pg": "^8.15.6",
     "prisma": "^6.19.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.3",
-    "@types/node": "^22.15.30",
-    "@repo/typescript-config": "workspace:*"
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^6.19.0",
