@@ -22,6 +22,12 @@
   --input: #084B54;
   --ring: #109eb1;
 
+  --status-approved: #10b981;
+  --status-pending: #f59e0b;
+  --status-rejected: var(--destructive);
+  --status-suspended: #f97316;
+  --status-archived: #6b7280;
+
   /* Fonts */
   --font-sans: Nunito, ui-sans-serif, sans-serif, system-ui;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -66,6 +72,12 @@
   --border: #084B54;
   --input: #084B54;
   --ring: #109eb1;
+
+  --status-approved: #10b981;
+  --status-pending: #f59e0b;
+  --status-rejected: var(--destructive);
+  --status-suspended: #f97316;
+  --status-archived: #6b7280;
 }
 
 @theme inline {

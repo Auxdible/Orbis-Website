@@ -3,7 +3,7 @@ import {Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInte
 import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags} from '@nestjs/swagger';
 import {UpdateProfileDto} from "./dtos/update-profile.dto";
 import {UserService} from "./user.service";
-import {Session, UserSession} from "@thallesp/nestjs-better-auth";
+import {AllowAnonymous, Session, UserSession} from "@thallesp/nestjs-better-auth";
 import {FileInterceptor} from '@nestjs/platform-express';
 import {ServerService} from "../server/server.service";
 
@@ -90,7 +90,15 @@ export class UserController {
         return this.userService.getFollowing(userId);
     }
 
+    @Get('username/:username')
+    @AllowAnonymous()
+    @ApiOperation({summary: 'Get user profile by username'})
+    async getUserProfileByUsername(@Param('username') username: string) {
+        return this.userService.getUserProfileByUsername(username);
+    }
+
     @Get(':userId')
+    @AllowAnonymous()
     @ApiOperation({summary: 'Get user profile by ID'})
     async getUserProfile(@Param('userId') userId: string) {
         return this.userService.getUserProfile(userId);

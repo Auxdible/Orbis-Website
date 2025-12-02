@@ -101,15 +101,14 @@ export default function ServersPage() {
 
   const getStatusColor = (status: Server['status']) => {
     switch (status) {
-      case 'APPROVED': return 'text-green-500';
-      case 'PENDING': return 'text-yellow-500';
-      case 'REJECTED': return 'text-red-500';
-      case 'SUSPENDED': return 'text-orange-500';
-      case 'ARCHIVED': return 'text-gray-500';
+      case 'APPROVED': return 'text-[#10b981]';
+      case 'PENDING': return 'text-[#f59e0b]';
+      case 'REJECTED': return 'text-destructive';
+      case 'SUSPENDED': return 'text-[#f97316]';
+      case 'ARCHIVED': return 'text-[#6b7280]';
       default: return 'text-muted-foreground';
     }
   };
-
   const getStatusIcon = (status: Server['status']) => {
     switch (status) {
       case 'APPROVED': return 'mdi:check-circle';
@@ -174,7 +173,7 @@ export default function ServersPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg p-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-primary/20 rounded-lg">
+            <div className="flex flex-col items-center justify-center p-3 bg-primary/20 rounded-lg">
               <Icon icon="mdi:server" width="24" height="24" className="text-primary" />
             </div>
             <div>
@@ -186,7 +185,7 @@ export default function ServersPage() {
 
         <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-lg p-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-green-500/20 rounded-lg">
+            <div className="flex flex-col items-center justify-center p-3 bg-green-500/20 rounded-lg">
               <Icon icon="mdi:check-circle" width="24" height="24" className="text-green-500" />
             </div>
             <div>
@@ -198,7 +197,7 @@ export default function ServersPage() {
 
         <div className="bg-gradient-to-br from-secondary/40 to-secondary/10 rounded-lg p-6">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-primary/20 rounded-lg">
+            <div className="flex flex-col items-center justify-center p-3 bg-primary/20 rounded-lg">
               <Icon icon="mdi:account-multiple" width="24" height="24" className="text-primary" />
             </div>
             <div>
@@ -238,7 +237,7 @@ export default function ServersPage() {
                       <Icon icon={getStatusIcon(server.status)} width="16" height="16" className={getStatusColor(server.status)} />
                       <span className={getStatusColor(server.status)}>{server.status}</span>
                       <span>•</span>
-                      <span className={server.isOnline ? 'text-green-500' : 'text-red-500'}>
+                      <span className={server.isOnline ? 'text-green-500' : 'text-destructive'}>
                         {server.isOnline ? 'Online' : 'Offline'}
                       </span>
                     </div>

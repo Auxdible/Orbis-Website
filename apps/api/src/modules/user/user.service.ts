@@ -316,4 +316,125 @@ export class UserService {
 
         return user;
     }
+
+    async getUserProfileByUsername(username: string) {
+        const user = await this.prisma.user.findFirst({
+            where: {username: {equals: username, mode: 'insensitive'}},
+            select: {
+                id: true,
+                username: true,
+                displayName: true,
+                image: true,
+                banner: true,
+                bio: true,
+                location: true,
+                website: true,
+                role: true,
+                status: true,
+                reputation: true,
+                showEmail: true,
+                showLocation: true,
+                showOnlineStatus: true,
+                createdAt: true,
+                lastActiveAt: true,
+                _count: {
+                    select: {
+                        followers: true,
+                        following: true,
+                        ownedResources: true,
+                        ownedServers: true,
+                    },
+                },
+                userBadges: {
+                    select: {
+                        id: true,
+                        awardedAt: true,
+                        badge: {
+                            select: {
+                                id: true,
+                                name: true,
+                                slug: true,
+                                description: true,
+                                icon: true,
+                                color: true,
+                                rarity: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        awardedAt: 'desc',
+                    },
+                },
+                teamMemberships: {
+                    select: {
+                        id: true,
+                        role: true,
+                        joinedAt: true,
+                        team: {
+                            select: {
+                                id: true,
+                                name: true,
+                                displayName: true,
+                                logo: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        joinedAt: 'desc',
+                    },
+                },
+                ownedResources: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true,
+                        tagline: true,
+                        iconUrl: true,
+                        type: true,
+                        status: true,
+                        downloadCount: true,
+                        likeCount: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    },
+                    where: {
+                        status: 'APPROVED',
+                    },
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                    take: 6,
+                },
+                ownedServers: {
+                    select: {
+                        id: true,
+                        name: true,
+                        slug: true,
+                        shortDesc: true,
+                        logo: true,
+                        serverIp: true,
+                        port: true,
+                        status: true,
+                        isOnline: true,
+                        currentPlayers: true,
+                        maxPlayers: true,
+                        createdAt: true,
+                    },
+                    where: {
+                        status: 'APPROVED',
+                    },
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                    take: 6,
+                },
+            },
+        });
+
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        return user;
+    }
 }
