@@ -130,7 +130,7 @@ export default function TeamPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Banner */}
                     <div
-                        className="h-32 -mx-4 sm:-mx-6 lg:-mx-8 relative overflow-hidden"
+                        className="h-48 -mx-4 sm:-mx-6 lg:-mx-8 relative overflow-hidden"
                         style={team.banner ? {
                             backgroundImage: `url(${team.banner})`,
                             backgroundSize: 'cover',
@@ -143,10 +143,10 @@ export default function TeamPage() {
                     </div>
 
                     {/* Team Info */}
-                    <div className="-mt-16 pb-6">
-                        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
-                            {/* Logo */}
-                            <div className="relative">
+                    <div className="pb-4">
+                        {/* Logo - Overlaps Banner */}
+                        <div className="-mt-12 mb-4 px-4 sm:px-0">
+                            <div className="relative inline-block">
                                 <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-xl">
                                     <AvatarImage src={team.logo || undefined} alt={team.displayName} />
                                     <AvatarFallback className="bg-gradient-to-br from-primary to-primary/70 text-white font-hebden text-2xl rounded-xl">
@@ -154,47 +154,50 @@ export default function TeamPage() {
                                     </AvatarFallback>
                                 </Avatar>
                             </div>
+                        </div>
 
-                            {/* Info */}
-                            <div className="flex-1 min-w-0">
-                                <h1 className="font-hebden text-2xl font-bold mb-1">{team.displayName}</h1>
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-nunito mb-3">
-                                    <span>@{team.name}</span>
-                                    <span className="flex items-center gap-1">
-                                        <Icon icon="mdi:calendar" width="14" height="14" />
-                                        Created {formatDate(team.createdAt)}
-                                    </span>
-                                    {team.website && (
-                                        <a href={team.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
-                                            <Icon icon="mdi:link" width="14" height="14" />
-                                            Website
-                                        </a>
-                                    )}
-                                    {team.discordUrl && (
-                                        <a href={team.discordUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
-                                            <Icon icon="mdi:discord" width="14" height="14" />
-                                            Discord
-                                        </a>
-                                    )}
+                        {/* Info & Stats - Below Banner */}
+                        <div className="space-y-3">
+                            <div className="flex flex-wrap items-center gap-2">
+                                <h1 className="font-hebden text-2xl font-bold">{team.displayName}</h1>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-nunito">
+                                <span>@{team.name}</span>
+                                <span className="flex items-center gap-1">
+                                    <Icon icon="mdi:calendar" width="14" height="14" />
+                                    Created {formatDate(team.createdAt)}
+                                </span>
+                                {team.website && (
+                                    <a href={team.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                                        <Icon icon="mdi:link" width="14" height="14" />
+                                        Website
+                                    </a>
+                                )}
+                                {team.discordUrl && (
+                                    <a href={team.discordUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-primary hover:underline">
+                                        <Icon icon="mdi:discord" width="14" height="14" />
+                                        Discord
+                                    </a>
+                                )}
+                            </div>
+
+                            {/* Inline Stats */}
+                            <div className="flex flex-wrap items-center gap-4 text-sm">
+                                <div className="flex items-center gap-1.5">
+                                    <Icon icon="mdi:account-group" width="16" height="16" className="text-muted-foreground" />
+                                    <span className="font-semibold text-foreground">{team.members.length}</span>
+                                    <span className="text-muted-foreground">members</span>
                                 </div>
-
-                                {/* Inline Stats */}
-                                <div className="flex flex-wrap items-center gap-4 text-sm">
-                                    <div className="flex items-center gap-1.5">
-                                        <Icon icon="mdi:account-group" width="16" height="16" className="text-muted-foreground" />
-                                        <span className="font-semibold text-foreground">{team.members.length}</span>
-                                        <span className="text-muted-foreground">members</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <Icon icon="mdi:package-variant" width="16" height="16" className="text-muted-foreground" />
-                                        <span className="font-semibold text-foreground">0</span>
-                                        <span className="text-muted-foreground">resources</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <Icon icon="mdi:server" width="16" height="16" className="text-primary" />
-                                        <span className="font-semibold text-foreground">0</span>
-                                        <span className="text-muted-foreground">servers</span>
-                                    </div>
+                                <div className="flex items-center gap-1.5">
+                                    <Icon icon="mdi:package-variant" width="16" height="16" className="text-muted-foreground" />
+                                    <span className="font-semibold text-foreground">0</span>
+                                    <span className="text-muted-foreground">resources</span>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                    <Icon icon="mdi:server" width="16" height="16" className="text-primary" />
+                                    <span className="font-semibold text-foreground">0</span>
+                                    <span className="text-muted-foreground">servers</span>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +210,7 @@ export default function TeamPage() {
                         )}
 
                         {/* Tabs Navigation */}
-                        <div className="flex gap-1 mt-6 border-b border-foreground/10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-x-auto">
+                        <div className="flex gap-1 mt-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-x-auto">
                             {tabs.map((tab) => (
                                 <button
                                     key={tab.id}
