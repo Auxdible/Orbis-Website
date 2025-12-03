@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@repo/auth/client';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { LogInIcon } from 'lucide-react';
@@ -78,7 +77,7 @@ export default function Login() {
         router.push('/dashboard/profile');
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred');
       setIsLoading(false);
     }
@@ -91,7 +90,7 @@ export default function Login() {
         provider,
         callbackURL: `${window.location.origin}/dashboard/profile`,
       });
-    } catch (err) {
+    } catch {
       setError('Social sign-in failed');
       setIsLoading(false);
     }
@@ -99,13 +98,13 @@ export default function Login() {
 
   return (
     <div className="min-h-[calc(100vh-112px)] flex items-center justify-center relative">
-      {/* Background (replaces page::before from CSS module) */}
+      {/* Background */}
       <div className="fixed inset-0 bg-[url('/background.webp')] bg-center bg-cover filter blur-sm -z-20 transform -scale-x-100" />
 
       <div className="w-full max-w-[480px]">
         <div className="relative border-4 border-muted/60 rounded-2xl p-4 pt-8">
-          {/* Decorative gradient layer (replaces the pseudo-element) */}
-          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-slate-900/90 to-cyan-900/75 -z-10" />
+          {/* Decorative gradient layer */}
+          <div className="absolute -inset-1 rounded-2xl bg-linear-to-br from-background/90 to-secondary/75 -z-10" />
 
           <Form {...form}>
             <div className="z-10 relative">
